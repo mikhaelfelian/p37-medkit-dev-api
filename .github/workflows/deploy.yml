@@ -1,0 +1,26 @@
+name: Deploy to Development
+
+on:
+  push:
+    branches:
+      - main  # Sesuaikan dengan branch utama
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Setup SSH Connection
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.PRIVATE_KEY }}
+
+    - name: Deploy Code to cPanel
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+          cd ${{ secrets.DEPLOY_PATH }} &&
+          git pull origin main &&
+          exit"
