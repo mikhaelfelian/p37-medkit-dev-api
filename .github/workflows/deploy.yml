@@ -20,7 +20,7 @@ jobs:
 
     - name: Deploy via SSH
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
-          cd ${{ secrets.DEPLOY_PATH }}
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+          cd ${{ secrets.DEPLOY_PATH }} &&
           git pull origin main
-        EOF 
+        "
